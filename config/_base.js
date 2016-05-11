@@ -22,7 +22,7 @@ const config = {
   server_host : 'localhost',
   server_port : process.env.PORT || 8000,
 
-  mongo_db    : 'mongodb://localhost/blog',
+  mongo_db    : process.env.MONGODB_URI || 'mongodb://localhost/blog',
 
   // ----------------------------------
   // Compiler Configuration
