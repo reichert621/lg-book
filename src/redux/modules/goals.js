@@ -1,34 +1,37 @@
 export const REQUEST_GOALS = 'REQUEST_GOALS'
 export const RECEIVE_GOALS = 'RECEIVE_GOALS'
 
-function requestGoals (endpoint) {
+import * as API from '../api'
+
+function requestGoals () {
   return {
-    type: REQUEST_GOALS,
-    endpoint
+    type: REQUEST_GOALS
   }
 }
 
-function receiveGoals (endpoint, json) {
+function receiveGoals (json) {
   return {
     type: RECEIVE_GOALS,
-    endpoint: endpoint,
     goals: json.goals,
     receivedAt: Date.now()
   }
 }
 
+function receiveFailure (error) {
+  return {
+    type: RECEIVE_GOALS,
+    error
+  }
+}
+
 export function fetchGoals () {
-  const endpoint = '/api/goals'
-
   return dispatch => {
-    dispatch(requestGoals(endpoint))
+    dispatch(requestGoals())
 
-    return fetch(endpoint)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        dispatch(receiveGoals(endpoint, json))
-      }).catch(err => console.log(err))
+    API.fetchGoals().then(
+      json => dispatch(receiveGoals(json)),
+      error => dispatch(receiveFailure(error))
+    )
   }
 }
 
@@ -75,6 +78,32 @@ function receiveDeletedGoal (endpoint, json) {
     receivedAt: Date.now()
   }
 }
+
+// const API = {
+//   addGoal (params) {
+//     const endpoint = '/api/goals'
+//     const httpParams = {
+//       method: 'post',
+//       headers: httpHeaders,
+//       body: JSON.stringify(params)
+//     }
+
+//     return fetch(endpoint, httpParams)
+//       .then(checkStatus)
+//       .then(parseJSON)
+//   }
+// }
+
+// export function addGoal (params) {
+//   return dispatch => {
+//     dispatch(requestGoal())
+
+//     API.addGoal(params).then(
+//       json => dispatch(receiveNewGoal(json))
+//       error => dispatch(receiveFailure(error))
+//     )
+//   }
+// }
 
 export function addGoal (body) {
   const endpoint = '/api/goals/'

@@ -39,6 +39,8 @@ export class EntryView extends React.Component {
 
       return (
         <div className='container text-center' style={style['container']}>
+          <Link to='/'>Back To Home View</Link>
+          <hr />
           <h1>{title}</h1>
           <div className='row'>
             <div className='col-md-6 col-md-offset-3'>

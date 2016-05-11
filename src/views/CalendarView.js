@@ -10,6 +10,24 @@ export class CalendarView extends React.Component {
     month: React.PropTypes.number.isRequired
   }
 
+  getPreviousMonthUrl () {
+    let { month, year } = this.props
+
+    let prevMonth = month > 1 ? month - 1 : 12
+    let prevYear = month > 1 ? year : year - 1
+
+    return `/${prevYear}/${prevMonth}`
+  }
+
+  getNextMonthUrl () {
+    let { month, year } = this.props
+
+    let nextMonth = month < 12 ? month + 1 : 1
+    let nextYear = month < 12 ? year : year + 1
+
+    return `/${nextYear}/${nextMonth}`
+  }
+
   render () {
     let { month, year } = this.props
 
@@ -17,23 +35,8 @@ export class CalendarView extends React.Component {
 
     const title = moment(new Date(year, _month)).format('MMMM')
 
-    let _prevMonth = month - 1
-    let _nextMonth = month + 1
-    let _prevYear = year
-    let _nextYear = year
-
-    if (_prevMonth < 1) {
-      _prevMonth = 12
-      _prevYear--
-    }
-
-    if (_nextMonth > 12) {
-      _nextMonth = 1
-      _nextYear++
-    }
-
-    const prev = `/${_prevYear}/${_prevMonth}`
-    const next = `/${_nextYear}/${_nextMonth}`
+    const prev = this.getPreviousMonthUrl()
+    const next = this.getNextMonthUrl()
 
     let titleStyle = {
       letterSpacing: 1
