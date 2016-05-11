@@ -19,7 +19,7 @@ const config = {
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
-  server_host : 'localhost',
+  server_host : '127.0.0.1',
   server_port : process.env.PORT || 8000,
 
   mongo_db    : process.env.MONGODB_URI || 'mongodb://localhost/blog',
