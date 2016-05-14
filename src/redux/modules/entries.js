@@ -1,114 +1,77 @@
 export const REQUEST_ENTRIES = 'REQUEST_ENTRIES'
 export const RECEIVE_ENTRIES = 'RECEIVE_ENTRIES'
+export const RECEIVE_FAILED = 'RECEIVE_FAILED'
 
-function checkStatus (response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response
-  } else {
-    var error = new Error(response.statusText)
-    error.response = response
+import * as API from '../api'
 
-    throw error
-  }
-}
-
-function parseJSON (response) {
-  return response.json()
-}
-
-function requestEntries (endpoint) {
+function receiveFailure (error) {
   return {
-    type: REQUEST_ENTRIES,
-    endpoint
+    type: RECEIVE_FAILED,
+    error
   }
 }
 
-function receiveEntries (endpoint, json) {
+function requestEntries () {
+  return {
+    type: REQUEST_ENTRIES
+  }
+}
+
+function receiveEntries (json) {
   return {
     type: RECEIVE_ENTRIES,
-    endpoint: endpoint,
     entries: json.entries,
     receivedAt: Date.now()
   }
 }
 
 export function fetchEntries () {
-  const endpoint = '/api/entries'
-
   return dispatch => {
-    dispatch(requestEntries(endpoint))
+    dispatch(requestEntries())
 
-    return fetch(endpoint)
-      .then(res => res.json())
-      .then(json => {
-        dispatch(receiveEntries(endpoint, json))
-      })
-      .catch(console.log)
+    API.fetchEntries().then(
+      json => dispatch(receiveEntries(json)),
+      error => dispatch(receiveFailure(error))
+    )
   }
 }
 
 export const REQUEST_ENTRY = 'REQUEST_ENTRY'
 export const RECEIVE_ENTRY = 'RECEIVE_ENTRY'
 
-const httpHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-}
-
-function requestEntry (endpoint) {
+function requestEntry () {
   return {
-    type: REQUEST_ENTRY,
-    endpoint
+    type: REQUEST_ENTRY
   }
 }
 
-function receiveEntry (endpoint, json) {
+function receiveEntry (json) {
   return {
     type: RECEIVE_ENTRY,
-    endpoint: endpoint,
     entry: json.entry,
     receivedAt: Date.now()
   }
 }
 
 export function fetchEntry (dateId) {
-  const endpoint = `/api/entries/${dateId}`
-  const httpParams = {
-    method: 'get',
-    headers: httpHeaders
-  }
-
   return dispatch => {
-    dispatch(requestEntry(endpoint))
+    dispatch(requestEntry())
 
-    return fetch(endpoint, httpParams)
-      .then(res => res.json())
-      .then(json => {
-        dispatch(receiveEntry(endpoint, json))
-      })
-      .catch(err => console.log(err))
+    API.fetchEntry(dateId).then(
+      json => dispatch(receiveEntry(json)),
+      error => dispatch(receiveFailure(error))
+    )
   }
 }
 
-export function updateEntry (id, body) {
-  const endpoint = `/api/entries/${id}`
-
-  const httpParams = {
-    method: 'put',
-    headers: httpHeaders,
-    body: JSON.stringify(body)
-  }
-
+export function updateEntry (id, params) {
   return dispatch => {
-    dispatch(requestEntry(endpoint))
+    dispatch(requestEntry())
 
-    return fetch(endpoint, httpParams)
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(json => {
-        dispatch(receiveEntry(endpoint, json))
-      })
-      .catch(err => console.log(err))
+    API.updateEntry(id, params).then(
+      json => dispatch(receiveEntry(json)),
+      error => dispatch(receiveFailure(error))
+    )
   }
 }
 

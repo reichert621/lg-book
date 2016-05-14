@@ -9,7 +9,8 @@ const allActions = Object.assign({}, promptActions, goalActions)
 
 const mapStateToProps = (state) => ({
   prompts: state.prompts.items,
-  goals: state.goals.items
+  goals: state.goals.items,
+  fetching: state.goals.isFetching
 })
 
 export class SettingsView extends React.Component {
@@ -23,7 +24,8 @@ export class SettingsView extends React.Component {
     removePrompt: React.PropTypes.func.isRequired,
     removeGoal: React.PropTypes.func.isRequired,
     addPrompt: React.PropTypes.func.isRequired,
-    addGoal: React.PropTypes.func.isRequired
+    addGoal: React.PropTypes.func.isRequired,
+    fetching: React.PropTypes.bool
   }
 
   componentDidMount () {
@@ -32,6 +34,14 @@ export class SettingsView extends React.Component {
   }
 
   render () {
+    if (this.props.fetching) {
+      return (
+        <div className='container text-center'>
+          <h1>Loading...</h1>
+        </div>
+      )
+    }
+
     return (
       <div className='container'>
         <div className='row'>

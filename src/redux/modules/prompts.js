@@ -1,35 +1,38 @@
 export const REQUEST_PROMPTS = 'REQUEST_PROMPTS'
 export const RECEIVE_PROMPTS = 'RECEIVE_PROMPTS'
+export const RECEIVE_FAILED = 'RECEIVE_FAILED'
 
-function requestPrompts (endpoint) {
+import * as API from '../api'
+
+function receiveFailure (error) {
   return {
-    type: REQUEST_PROMPTS,
-    endpoint
+    type: RECEIVE_FAILED,
+    error
   }
 }
 
-function receivePrompts (endpoint, json) {
+function requestPrompts () {
+  return {
+    type: REQUEST_PROMPTS
+  }
+}
+
+function receivePrompts (json) {
   return {
     type: RECEIVE_PROMPTS,
-    endpoint: endpoint,
     prompts: json.prompts,
     receivedAt: Date.now()
   }
 }
 
 export function fetchPrompts () {
-  const endpoint = '/api/prompts'
-
   return dispatch => {
-    dispatch(requestPrompts(endpoint))
+    dispatch(requestPrompts())
 
-    return fetch(endpoint)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        console.log(json)
-        dispatch(receivePrompts(endpoint, json))
-      }).catch(err => console.log(err))
+    API.fetchPrompts().then(
+      json => dispatch(receivePrompts(json)),
+      error => dispatch(receiveFailure(error))
+    )
   }
 }
 
@@ -38,104 +41,66 @@ export const RECEIVE_NEW_PROMPT = 'RECEIVE_NEW_PROMPT'
 export const RECEIVE_UPDATED_PROMPT = 'RECEIVE_UPDATED_PROMPT'
 export const RECEIVE_DELETED_PROMPT = 'RECEIVE_DELETED_PROMPT'
 
-const httpHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-}
-
-function requestPrompt (endpoint) {
+function requestPrompt () {
   return {
-    type: REQUEST_PROMPT,
-    endpoint
+    type: REQUEST_PROMPT
   }
 }
 
-function receiveNewPrompt (endpoint, json) {
+function receiveNewPrompt (json) {
   return {
     type: RECEIVE_NEW_PROMPT,
-    endpoint: endpoint,
     prompt: json.prompt,
     receivedAt: Date.now()
   }
 }
 
-function receiveUpdatedPrompt (endpoint, json) {
+export function addPrompt (params) {
+  return dispatch => {
+    dispatch(requestPrompt())
+
+    API.addPrompt(params).then(
+      json => dispatch(receiveNewPrompt(json)),
+      error => dispatch(receiveFailure(error))
+    )
+  }
+}
+
+function receiveUpdatedPrompt (json) {
   return {
     type: RECEIVE_UPDATED_PROMPT,
-    endpoint: endpoint,
     prompt: json.prompt,
     receivedAt: Date.now()
   }
 }
 
-function receiveDeletedPrompt (endpoint, json) {
+export function updatePrompt (id, params) {
+  return dispatch => {
+    dispatch(requestPrompt())
+
+    API.updatePrompt(id, params).then(
+      json => dispatch(receiveUpdatedPrompt(json)),
+      error => dispatch(receiveFailure(error))
+    )
+  }
+}
+
+function receiveDeletedPrompt (json) {
   return {
     type: RECEIVE_DELETED_PROMPT,
-    endpoint: endpoint,
     prompt: json.prompt,
     receivedAt: Date.now()
-  }
-}
-
-export function addPrompt (body) {
-  const endpoint = '/api/prompts/'
-
-  const httpParams = {
-    method: 'post',
-    headers: httpHeaders,
-    body: JSON.stringify(body)
-  }
-
-  return dispatch => {
-    dispatch(requestPrompt(endpoint))
-
-    return fetch(endpoint, httpParams)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        dispatch(receiveNewPrompt(endpoint, json))
-      }).catch(err => console.log(err))
-  }
-}
-
-export function updatePrompt (id, body) {
-  const endpoint = `/api/prompts/${id}`
-
-  const httpParams = {
-    method: 'put',
-    headers: httpHeaders,
-    body: JSON.stringify(body)
-  }
-
-  return dispatch => {
-    dispatch(requestPrompt(endpoint))
-
-    return fetch(endpoint, httpParams)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        dispatch(receiveUpdatedPrompt(endpoint, json))
-      }).catch(err => console.log(err))
   }
 }
 
 export function removePrompt (id) {
-  const endpoint = `/api/prompts/${id}`
-
-  const httpParams = {
-    method: 'delete',
-    headers: httpHeaders
-  }
-
   return dispatch => {
-    dispatch(requestPrompt(endpoint))
+    dispatch(requestPrompt())
 
-    return fetch(endpoint, httpParams)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        dispatch(receiveDeletedPrompt(endpoint, json))
-      }).catch(err => console.log(err))
+    API.removePrompt(id).then(
+      json => dispatch(receiveDeletedPrompt(json)),
+      error => dispatch(receiveFailure(error))
+    )
   }
 }
 

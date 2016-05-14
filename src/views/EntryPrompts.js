@@ -20,6 +20,7 @@ export class EntryPrompts extends React.Component {
     }
   }
 
+  // TODO: make this better
   triggerSaveTimeout () {
     if (this.state._timeout) {
       clearTimeout(this.state._timeout)

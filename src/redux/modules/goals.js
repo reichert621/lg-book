@@ -1,7 +1,15 @@
 export const REQUEST_GOALS = 'REQUEST_GOALS'
 export const RECEIVE_GOALS = 'RECEIVE_GOALS'
+export const RECEIVE_FAILED = 'RECEIVE_FAILED'
 
 import * as API from '../api'
+
+function receiveFailure (error) {
+  return {
+    type: RECEIVE_FAILED,
+    error
+  }
+}
 
 function requestGoals () {
   return {
@@ -14,13 +22,6 @@ function receiveGoals (json) {
     type: RECEIVE_GOALS,
     goals: json.goals,
     receivedAt: Date.now()
-  }
-}
-
-function receiveFailure (error) {
-  return {
-    type: RECEIVE_GOALS,
-    error
   }
 }
 
@@ -40,130 +41,71 @@ export const RECEIVE_NEW_GOAL = 'RECEIVE_NEW_GOAL'
 export const RECEIVE_UPDATED_GOAL = 'RECEIVE_UPDATED_GOAL'
 export const RECEIVE_DELETED_GOAL = 'RECEIVE_DELETED_GOAL'
 
-const httpHeaders = {
-  'Accept': 'application/json',
-  'Content-Type': 'application/json'
-}
+// const httpHeaders = {
+//   'Accept': 'application/json',
+//   'Content-Type': 'application/json'
+// }
 
-function requestGoal (endpoint) {
+function requestGoal () {
   return {
-    type: REQUEST_GOAL,
-    endpoint
+    type: REQUEST_GOAL
   }
 }
 
-function receiveNewGoal (endpoint, json) {
+function receiveNewGoal (json) {
   return {
     type: RECEIVE_NEW_GOAL,
-    endpoint: endpoint,
     goal: json.goal,
     receivedAt: Date.now()
   }
 }
 
-function receiveUpdatedGoal (endpoint, json) {
+export function addGoal (params) {
+  return dispatch => {
+    dispatch(requestGoal())
+
+    API.addGoal(params).then(
+      json => dispatch(receiveNewGoal(json)),
+      error => dispatch(receiveFailure(error))
+    )
+  }
+}
+
+function receiveUpdatedGoal (json) {
   return {
     type: RECEIVE_UPDATED_GOAL,
-    endpoint: endpoint,
     goal: json.goal,
     receivedAt: Date.now()
   }
 }
 
-function receiveDeletedGoal (endpoint, json) {
+export function updateGoal (id, params) {
+  return dispatch => {
+    dispatch(requestGoal())
+
+    API.updateGoal(id, params).then(
+      json => dispatch(receiveUpdatedGoal(json)),
+      error => dispatch(receiveFailure(error))
+    )
+  }
+}
+
+function receiveDeletedGoal (json) {
   return {
     type: RECEIVE_DELETED_GOAL,
-    endpoint: endpoint,
     goal: json.goal,
     receivedAt: Date.now()
-  }
-}
-
-// const API = {
-//   addGoal (params) {
-//     const endpoint = '/api/goals'
-//     const httpParams = {
-//       method: 'post',
-//       headers: httpHeaders,
-//       body: JSON.stringify(params)
-//     }
-
-//     return fetch(endpoint, httpParams)
-//       .then(checkStatus)
-//       .then(parseJSON)
-//   }
-// }
-
-// export function addGoal (params) {
-//   return dispatch => {
-//     dispatch(requestGoal())
-
-//     API.addGoal(params).then(
-//       json => dispatch(receiveNewGoal(json))
-//       error => dispatch(receiveFailure(error))
-//     )
-//   }
-// }
-
-export function addGoal (body) {
-  const endpoint = '/api/goals/'
-
-  const httpParams = {
-    method: 'post',
-    headers: httpHeaders,
-    body: JSON.stringify(body)
-  }
-
-  return dispatch => {
-    dispatch(requestGoal(endpoint))
-
-    return fetch(endpoint, httpParams)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        dispatch(receiveNewGoal(endpoint, json))
-      }).catch(err => console.log(err))
-  }
-}
-
-export function updateGoal (id, body) {
-  const endpoint = `/api/goals/${id}`
-
-  const httpParams = {
-    method: 'put',
-    headers: httpHeaders,
-    body: JSON.stringify(body)
-  }
-
-  return dispatch => {
-    dispatch(requestGoal(endpoint))
-
-    return fetch(endpoint, httpParams)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        dispatch(receiveUpdatedGoal(endpoint, json))
-      }).catch(err => console.log(err))
   }
 }
 
 export function removeGoal (id) {
-  const endpoint = `/api/goals/${id}`
-
-  const httpParams = {
-    method: 'delete',
-    headers: httpHeaders
-  }
-
   return dispatch => {
-    dispatch(requestGoal(endpoint))
+    dispatch(requestGoal())
 
-    return fetch(endpoint, httpParams)
-      .then(res => {
-        return res.json()
-      }).then(json => {
-        dispatch(receiveDeletedGoal(endpoint, json))
-      }).catch(err => console.log(err))
+    API.removeGoal(id).then(
+      json => dispatch(receiveDeletedGoal(json)),
+      error => dispatch(receiveFailure(error))
+    )
   }
 }
 
