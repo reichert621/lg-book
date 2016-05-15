@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router'
+// import styles from './HomeView.scss'
 import { fetchEntries } from '../redux/modules/entries'
 import Calendar from './CalendarView.js'
 import NavBar from './NavBar.js'
@@ -31,17 +31,10 @@ export class HomeView extends React.Component {
     return (
       <div>
         <NavBar />
-        <div>
-          <div className='text-center'>
-            <h1>Daily Journal</h1>
-          </div>
 
-          <Calendar
-            year={year}
-            month={month} />
-
-          <hr />
-        </div>
+        <Calendar
+          year={year}
+          month={month} />
       </div>
     )
   }

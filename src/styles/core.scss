@@ -12,10 +12,16 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  background-color: #dde2e9;
+  font-family: 'Open Sans', sans-serif;
 }
 
 *,
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+#navbar {
+  border-radius: 0px;
 }

@@ -35,6 +35,16 @@ export class SettingsView extends React.Component {
   }
 
   render () {
+    const style = {
+      container: {
+        width: '60%',
+        borderRadius: 2,
+        margin: '0px auto 20px',
+        padding: 20,
+        backgroundColor: 'white'
+      }
+    }
+
     // if (this.props.fetching) {
     //   return (
     //     <div className='container text-center'>
@@ -46,16 +56,16 @@ export class SettingsView extends React.Component {
     return (
       <div>
         <NavBar />
-        <div className='container'>
+        <div style={style.container}>
           <div className='row'>
-            <div className='col-md-6'>
+            <div className='col-md-12'>
               <EditableList title='Prompts'
                   items={this.props.prompts}
                   addItem={this.props.addPrompt}
                   updateItem={this.props.updatePrompt}
                   removeItem={this.props.removePrompt} />
             </div>
-            <div className='col-md-6'>
+            <div className='col-md-12'>
               <EditableList title='Goals'
                   items={this.props.goals}
                   addItem={this.props.addGoal}

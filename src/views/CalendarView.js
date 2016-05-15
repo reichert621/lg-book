@@ -43,7 +43,8 @@ export class CalendarView extends React.Component {
         letterSpacing: 1
       },
       header: {
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 24
       },
       switchMonth: {
         paddingTop: 15
@@ -55,7 +56,9 @@ export class CalendarView extends React.Component {
 
         <div className='row' style={style.header}>
           <div className='col-sm-2 text-center' style={style.switchMonth}>
-            <Link to={prev}>Prev</Link>
+            <Link to={prev}>
+              <span className='glyphicon glyphicon-menu-left' aria-hidden='true'></span>
+            </Link>
           </div>
           <div className='col-sm-8'>
             <div className={styles['calendar-header']} style={style.title}>
@@ -63,7 +66,9 @@ export class CalendarView extends React.Component {
             </div>
           </div>
           <div className='col-sm-2 text-center' style={style.switchMonth}>
-            <Link to={next}>Next</Link>
+            <Link to={next}>
+              <span className='glyphicon glyphicon-menu-right' aria-hidden='true'></span>
+            </Link>
           </div>
         </div>
 

@@ -3,8 +3,14 @@ import { Link } from 'react-router'
 
 export class NavBar extends React.Component {
   render () {
+    const style = {
+      navbar: {
+        borderRadius: 0
+      }
+    }
+
     return (
-      <nav className='navbar navbar-default'>
+      <nav className='navbar navbar-inverse' style={style.navbar}>
         <div className='container-fluid'>
           <div className='navbar-header'>
             <a className='navbar-brand' href='#'>Logbook</a>

@@ -30,7 +30,9 @@ export class EntryView extends React.Component {
   render () {
     const style = {
       container: {
-        marginBottom: 20
+        marginBottom: 20,
+        padding: 20,
+        backgroundColor: 'white'
       }
     }
 
