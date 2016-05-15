@@ -1,5 +1,7 @@
 import React from 'react'
 import EditableItem from './EditableItem.js'
+// TODO: store in different css file
+import styles from './EntryView.scss'
 
 export class EditableList extends React.Component {
   static propTypes = {
@@ -23,12 +25,21 @@ export class EditableList extends React.Component {
 
   handleSubmit (e) {
     if (e.which === 13) {
-      this.props.addItem({ text: this.state.newItem })
-      this.refs.newItem.value = ''
+      this.addItem()
     }
   }
 
+  addItem () {
+    this.props.addItem({ text: this.state.newItem })
+    this.refs.newItem.value = ''
+  }
+
   render () {
+    const style = {
+      title: { marginBottom: 0 },
+      noItems: { fontSize: 16 }
+    }
+
     let items
 
     if (this.props.items && this.props.items.length) {
@@ -40,22 +51,33 @@ export class EditableList extends React.Component {
         )
       })
     } else {
-      items = <div>No items!</div>
+      items = (
+        <div className='text-center' style={style.noItems}>
+          No items!
+        </div>
+      )
     }
 
     return (
       <div>
-        <h1>{this.props.title}</h1>
+        <h1 className='text-center' style={style.title}>
+          {this.props.title}
+        </h1>
 
-        <input type='text' className='form-control'
-               ref='newItem'
-               placeholder='Enter new item...'
-               onChange={this.handleChange.bind(this)}
-               onKeyDown={this.handleSubmit.bind(this)} />
+        <div className={styles['input-add-item']}>
+          <input type='text' className='form-control' ref='newItem'
+              placeholder='Enter new item...'
+              onChange={this.handleChange.bind(this)}
+              onKeyDown={this.handleSubmit.bind(this)} />
+          <button className='btn'
+              onClick={this.addItem.bind(this)}>
+            Add
+          </button>
+        </div>
 
-        <ul>
+        <div>
           {items}
-        </ul>
+        </div>
 
       </div>
     )

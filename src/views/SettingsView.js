@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router'
+// import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { actions as promptActions } from '../redux/modules/prompts'
 import { actions as goalActions } from '../redux/modules/goals'
@@ -59,13 +59,6 @@ export class SettingsView extends React.Component {
         <div style={style.container}>
           <div className='row'>
             <div className='col-md-12'>
-              <EditableList title='Prompts'
-                  items={this.props.prompts}
-                  addItem={this.props.addPrompt}
-                  updateItem={this.props.updatePrompt}
-                  removeItem={this.props.removePrompt} />
-            </div>
-            <div className='col-md-12'>
               <EditableList title='Goals'
                   items={this.props.goals}
                   addItem={this.props.addGoal}
@@ -73,7 +66,17 @@ export class SettingsView extends React.Component {
                   removeItem={this.props.removeGoal} />
             </div>
             <div className='col-md-12'>
-              <Link to='/'>Back To Home View</Link>
+              <hr />
+            </div>
+            <div className='col-md-12'>
+              <EditableList title='Prompts'
+                  items={this.props.prompts}
+                  addItem={this.props.addPrompt}
+                  updateItem={this.props.updatePrompt}
+                  removeItem={this.props.removePrompt} />
+            </div>
+            <div className='col-md-12'>
+              <hr />
             </div>
           </div>
         </div>

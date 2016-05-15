@@ -1,0 +1,22 @@
+$slate-gray: #67696b;
+
+.item-container {
+  display: table;
+  width: 80%;
+  margin: 10px auto;
+  font-size: 16px;
+  // border-bottom: $slate-gray;
+}
+
+.item-check, .item-remove {
+  width: 5%;
+
+  input[type='checkbox'] {
+    cursor: pointer;
+  }
+}
+
+.item-text {
+  width: 90%;
+  padding: 4px 10px;
+}

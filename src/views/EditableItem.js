@@ -1,4 +1,5 @@
 import React from 'react'
+import css from '../styles/main.scss'
 
 export class EditableItem extends React.Component {
   static propTypes = {
@@ -55,44 +56,58 @@ export class EditableItem extends React.Component {
   render () {
     let { item } = this.props
     const styles = {
-      item: {
-        margin: '10px 0px',
+      'item-container': {
         color: item.active ? 'black' : 'grey'
       },
+      item: {
+        display: 'table-cell',
+        verticalAlign: 'middle'
+      },
       button: {
-        marginLeft: 10
+        padding: '2px 4px 0px'
       }
     }
 
+    let itemText
+
     if (this.state.editing) {
-      return (
-        <div>
+      itemText = (
           <input type='text' className='form-control'
             ref='editText'
             value={this.state.editText}
             onChange={this.handleEditText.bind(this)}
             onBlur={this.toggleEditing.bind(this)}
             onKeyDown={this.handleSubmit.bind(this)} />
-        </div>
       )
     } else {
-      return (
-        <div className='checkbox' style={styles['item']}>
+      itemText = (
+        <span onDoubleClick={this.toggleEditing.bind(this)}>
+          {item.text}
+        </span>
+      )
+    }
+
+    return (
+      <div className={css['item-container']} style={styles['item-container']}>
+        <div className={css['item-check']} style={styles['item']}>
           <input type='checkbox' checked={item.active}
                  onChange={this.toggleActive.bind(this)} />
-          <span onDoubleClick={this.toggleEditing.bind(this)}>
-            {item.text}
-          </span>
+        </div>
 
+        <div className={css['item-text']} style={styles['item']}>
+          {itemText}
+        </div>
+
+        <div className={css['item-remove']} style={styles['item']}>
           <button style={styles['button']}
                   className='btn btn-xs btn-danger'
                   onClick={this.handleRemove.bind(this)}>
-            Remove
+            <span className='glyphicon glyphicon-remove' aria-hidden='true'></span>
           </button>
-
         </div>
-      )
-    }
+
+      </div>
+    )
   }
 }
 

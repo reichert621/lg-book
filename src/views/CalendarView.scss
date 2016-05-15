@@ -50,6 +50,7 @@ $white: #fff;
   font-size: 20px;
   position: relative;
   color: black;
+  border-radius: 2px;
 
   // span {
   //   color: black;
@@ -167,6 +168,8 @@ $white: #fff;
 }
 
 .calendar-day.disabled {
+  cursor: initial;
+
   span {
     color: rgba(209, 209, 209, 0.6);
   }
