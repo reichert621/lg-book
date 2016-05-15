@@ -8,20 +8,24 @@ $turquoise: #45e1db;
 $white: #fff;
 
 .calendar-container {
+  // border: 1px solid black;
+  min-width: 740px;
+  max-width: 820px;
+  width: 80%;
   border-radius: 3px;
-  margin: 40px 10px;
+  margin: 20px auto;
 }
 
 .calendar-header {
   padding: 10px;
   text-align: center;
   color: $dark-blue;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .calendar-table {
-  width: 70%;
-  margin: 30px auto;
+  width: 90%;
+  margin: 8px auto 30px;
 }
 
 .calendar-day-label, .calendar-day {

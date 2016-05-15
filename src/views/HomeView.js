@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+// import { Link } from 'react-router'
 import { fetchEntries } from '../redux/modules/entries'
 import Calendar from './CalendarView.js'
+import NavBar from './NavBar.js'
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -28,19 +29,19 @@ export class HomeView extends React.Component {
     const month = Number(this.props.params.month) || (new Date()).getMonth() + 1
 
     return (
-      <div className='container'>
-        <div className='text-center'>
-          <h1>Daily Journal</h1>
+      <div>
+        <NavBar />
+        <div>
+          <div className='text-center'>
+            <h1>Daily Journal</h1>
+          </div>
+
+          <Calendar
+            year={year}
+            month={month} />
+
+          <hr />
         </div>
-        <hr />
-
-        <Calendar
-          year={year}
-          month={month} />
-
-        <hr />
-
-        <Link to='/settings'>Go To Settings</Link>
       </div>
     )
   }

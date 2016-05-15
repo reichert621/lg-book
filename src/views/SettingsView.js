@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { actions as promptActions } from '../redux/modules/prompts'
 import { actions as goalActions } from '../redux/modules/goals'
 import EditableList from './EditableList.js'
+import NavBar from './NavBar.js'
 
 const allActions = Object.assign({}, promptActions, goalActions)
 
@@ -34,33 +35,36 @@ export class SettingsView extends React.Component {
   }
 
   render () {
-    if (this.props.fetching) {
-      return (
-        <div className='container text-center'>
-          <h1>Loading...</h1>
-        </div>
-      )
-    }
+    // if (this.props.fetching) {
+    //   return (
+    //     <div className='container text-center'>
+    //       <h1>Loading...</h1>
+    //     </div>
+    //   )
+    // }
 
     return (
-      <div className='container'>
-        <div className='row'>
-          <div className='col-md-6'>
-            <EditableList title='Prompts'
-                items={this.props.prompts}
-                addItem={this.props.addPrompt}
-                updateItem={this.props.updatePrompt}
-                removeItem={this.props.removePrompt} />
-          </div>
-          <div className='col-md-6'>
-            <EditableList title='Goals'
-                items={this.props.goals}
-                addItem={this.props.addGoal}
-                updateItem={this.props.updateGoal}
-                removeItem={this.props.removeGoal} />
-          </div>
-          <div className='col-md-12'>
-            <Link to='/'>Back To Home View</Link>
+      <div>
+        <NavBar />
+        <div className='container'>
+          <div className='row'>
+            <div className='col-md-6'>
+              <EditableList title='Prompts'
+                  items={this.props.prompts}
+                  addItem={this.props.addPrompt}
+                  updateItem={this.props.updatePrompt}
+                  removeItem={this.props.removePrompt} />
+            </div>
+            <div className='col-md-6'>
+              <EditableList title='Goals'
+                  items={this.props.goals}
+                  addItem={this.props.addGoal}
+                  updateItem={this.props.updateGoal}
+                  removeItem={this.props.removeGoal} />
+            </div>
+            <div className='col-md-12'>
+              <Link to='/'>Back To Home View</Link>
+            </div>
           </div>
         </div>
       </div>

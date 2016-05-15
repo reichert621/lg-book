@@ -55,7 +55,7 @@ export class CalendarWeekRows extends React.Component {
       )
     })
 
-    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
     let columns = days.map((day, i) => {
       return (

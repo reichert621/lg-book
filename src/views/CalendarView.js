@@ -38,21 +38,35 @@ export class CalendarView extends React.Component {
     const prev = this.getPreviousMonthUrl()
     const next = this.getNextMonthUrl()
 
-    let titleStyle = {
-      letterSpacing: 1
+    const style = {
+      title: {
+        letterSpacing: 1
+      },
+      header: {
+        marginTop: 10
+      },
+      switchMonth: {
+        paddingTop: 15
+      }
     }
 
     return (
       <div className={styles['calendar-container']}>
-        <div className='row'>
-          <div className='col-md-6 text-left'>
+
+        <div className='row' style={style.header}>
+          <div className='col-sm-2 text-center' style={style.switchMonth}>
             <Link to={prev}>Prev</Link>
           </div>
-          <div className='col-md-6 text-right'>
+          <div className='col-sm-8'>
+            <div className={styles['calendar-header']} style={style.title}>
+              {title} {year}
+            </div>
+          </div>
+          <div className='col-sm-2 text-center' style={style.switchMonth}>
             <Link to={next}>Next</Link>
           </div>
         </div>
-        <div className={styles['calendar-header']} style={titleStyle}>{title}</div>
+
         <CalendarWeekRows
           month={_month}
           year={year} />
