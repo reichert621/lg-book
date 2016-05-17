@@ -41,13 +41,13 @@ export class EntryView extends React.Component {
       }
     }
 
-    if (this.props.fetching || !this.props.entry) {
-      return (
-        <div className='container text-center'>
-          <h1 style={style.loading}>Loading...</h1>
-        </div>
-      )
-    }
+    // if (this.props.fetching || !this.props.entry) {
+    //   return (
+    //     <div className='container text-center'>
+    //       <h1 style={style.loading}>Loading...</h1>
+    //     </div>
+    //   )
+    // }
 
     let { _id, title, prompts, goals } = this.props.entry
 

@@ -48,13 +48,13 @@ export class SettingsView extends React.Component {
       }
     }
 
-    if (this.props.fetching) {
-      return (
-        <div className='container text-center'>
-          <h1 style={style.loading}>Loading...</h1>
-        </div>
-      )
-    }
+    // if (this.props.fetching) {
+    //   return (
+    //     <div className='container text-center'>
+    //       <h1 style={style.loading}>Loading...</h1>
+    //     </div>
+    //   )
+    // }
 
     return (
       <div>
