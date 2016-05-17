@@ -42,16 +42,19 @@ export class SettingsView extends React.Component {
         margin: '0px auto 20px',
         padding: 20,
         backgroundColor: 'white'
+      },
+      loading: {
+        marginTop: 100
       }
     }
 
-    // if (this.props.fetching) {
-    //   return (
-    //     <div className='container text-center'>
-    //       <h1>Loading...</h1>
-    //     </div>
-    //   )
-    // }
+    if (this.props.fetching) {
+      return (
+        <div className='container text-center'>
+          <h1 style={style.loading}>Loading...</h1>
+        </div>
+      )
+    }
 
     return (
       <div>

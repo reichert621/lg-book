@@ -1,22 +1,56 @@
 $slate-gray: #67696b;
+$light-gray: #dde2e9;
 
 .item-container {
   display: table;
   width: 80%;
   margin: 10px auto;
   font-size: 16px;
-  // border-bottom: $slate-gray;
 }
 
-.item-check, .item-remove {
+.item-check-container, .item-remove {
   width: 5%;
+  padding: 4px;
+}
 
-  input[type='checkbox'] {
-    cursor: pointer;
-  }
+.item-checkbox {
+  cursor: pointer;
+  border: 2px solid $light-gray;
+  border-radius: 2px;
+  width: 20px;
+  height: 20px;
+}
+
+.item-checkbox.active {
+  border: 2px solid $slate-gray;
+  background-image: url('../assets/check-blue.svg');
+  background-size: 14px;
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 .item-text {
   width: 90%;
   padding: 4px 10px;
+}
+
+button.remove-btn {
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(233, 40, 40, 1);
+  border-radius: 2px;
+  background-color: rgba(249, 113, 113, 1);
+
+  background-image: url('../assets/icon-x.svg');
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+
+  &:hover {
+    background-color: rgba(233, 40, 40, 1);
+  }
+}
+
+button.faded {
+  opacity: 0.5;
 }

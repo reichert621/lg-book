@@ -1,5 +1,6 @@
 import React from 'react'
 import css from '../styles/main.scss'
+import classNames from 'classnames'
 
 export class EditableItem extends React.Component {
   static propTypes = {
@@ -62,9 +63,6 @@ export class EditableItem extends React.Component {
       item: {
         display: 'table-cell',
         verticalAlign: 'middle'
-      },
-      button: {
-        padding: '2px 4px 0px'
       }
     }
 
@@ -87,22 +85,32 @@ export class EditableItem extends React.Component {
       )
     }
 
+    let checkboxClass = classNames({
+      [css['item-checkbox']]: true,
+      [css['active']]: item.active
+    })
+
+    let removeBtnClass = classNames({
+      [css['remove-btn']]: true,
+      [css['faded']]: !item.active
+    })
+
     return (
       <div className={css['item-container']} style={styles['item-container']}>
-        <div className={css['item-check']} style={styles['item']}>
-          <input type='checkbox' checked={item.active}
-                 onChange={this.toggleActive.bind(this)} />
-        </div>
 
         <div className={css['item-text']} style={styles['item']}>
           {itemText}
         </div>
 
+        <div className={css['item-check-container']} style={styles['item']}>
+          <div className={checkboxClass} onClick={this.toggleActive.bind(this)}>
+          </div>
+
+        </div>
+
         <div className={css['item-remove']} style={styles['item']}>
-          <button style={styles['button']}
-                  className='btn btn-xs btn-danger'
+          <button className={removeBtnClass}
                   onClick={this.handleRemove.bind(this)}>
-            <span className='glyphicon glyphicon-remove' aria-hidden='true'></span>
           </button>
         </div>
 
