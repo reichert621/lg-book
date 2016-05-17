@@ -7,7 +7,8 @@ import EntryPrompts from './EntryPrompts.js'
 import EntryGoals from './EntryGoals.js'
 
 const mapStateToProps = (state) => ({
-  entry: state.entries.item
+  entry: state.entries.item,
+  fetching: state.entries.isFetching
 })
 
 export class EntryView extends React.Component {
@@ -16,7 +17,8 @@ export class EntryView extends React.Component {
     fetchEntry: React.PropTypes.func.isRequired,
     updateEntry: React.PropTypes.func.isRequired,
     editEntry: React.PropTypes.func.isRequired,
-    params: React.PropTypes.object
+    params: React.PropTypes.object,
+    fetching: React.PropTypes.bool
   }
 
   componentDidMount () {
@@ -39,7 +41,7 @@ export class EntryView extends React.Component {
       }
     }
 
-    if (!this.props.entry) {
+    if (this.props.fetching || !this.props.entry) {
       return (
         <div className='container text-center'>
           <h1 style={style.loading}>Loading...</h1>
@@ -50,7 +52,7 @@ export class EntryView extends React.Component {
     let { _id, title, prompts, goals } = this.props.entry
 
     return (
-      <div className='container text-center' style={style['container']}>
+      <div className='container text-center' style={style.container}>
         <Link to='/'>Back To Home View</Link>
         <hr />
         <h1>{title}</h1>

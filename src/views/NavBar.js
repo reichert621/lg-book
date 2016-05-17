@@ -13,7 +13,7 @@ export class NavBar extends React.Component {
       <nav className='navbar navbar-inverse' style={style.navbar}>
         <div className='container-fluid'>
           <div className='navbar-header'>
-            <a className='navbar-brand' href='#'>Logbook</a>
+            <a className='navbar-brand' href='#'>Logbuuk</a>
           </div>
 
           <div className='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
