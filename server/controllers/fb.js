@@ -25,14 +25,14 @@ export function listen (req, res) {
       return (e.sender && e.sender.id) && (e.message && e.message.text)
     })
     .map(e => {
-      return textMessage({
-        id: e.sender.id,
-        text: e.message.text
-      })
+      return textMessage(e.sender.id, e.message.text)
     })
 
   Promise.all(promises)
-    .then(() => res.sendStatus(200))
+    .then((results) => {
+      console.log('PROMISE RESULTS!', results)
+      res.sendStatus(200)
+    })
     .catch(err => {
       console.log('ERROR!', err);
       res.sendStatus(500);
