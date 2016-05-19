@@ -57,7 +57,7 @@ export function fetchEntryByDate (dateId) {
     .then(entry => {
       if (entry) return entry
 
-      return createDefaultEntry(entryDateId)
+      return createDefaultEntry(dateId)
     })
 }
 
