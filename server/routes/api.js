@@ -22,6 +22,7 @@ export function routes (app) {
   app.put('/api/entries/:id', entries.update);
 
   app.get('/api/fb', fb.verify);
+  app.post('/api/fb', fb.listen);
 
 };
 

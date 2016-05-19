@@ -15,14 +15,14 @@ $light-gray: #dde2e9;
 
 .item-checkbox {
   cursor: pointer;
-  border: 2px solid $light-gray;
+  border: 1px solid $light-gray;
   border-radius: 2px;
   width: 20px;
   height: 20px;
 }
 
 .item-checkbox.active {
-  border: 2px solid $slate-gray;
+  border: 1px solid $slate-gray;
   background-image: url('../assets/check-blue.svg');
   background-size: 14px;
   background-repeat: no-repeat;
@@ -52,5 +52,5 @@ button.remove-btn {
 }
 
 button.faded {
-  opacity: 0.5;
+  opacity: 0.9;
 }
