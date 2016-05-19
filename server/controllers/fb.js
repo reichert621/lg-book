@@ -1,4 +1,5 @@
-import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch'
+import Promise from 'bluebird'
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN
 const PAGE_TOKEN = process.env.PAGE_TOKEN
@@ -57,4 +58,5 @@ function textMessage(id, text) {
     },
     body: json
   });
+}
 
