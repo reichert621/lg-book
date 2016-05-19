@@ -1,6 +1,8 @@
 import fetch from 'isomorphic-fetch'
 import Promise from 'bluebird'
-import Prompt from '../models/prompt.js'
+import moment from 'moment'
+import Prompt from '../models/prompt'
+import { fetchEntryByDate } from './entries'
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN
 const PAGE_TOKEN = process.env.PAGE_TOKEN
@@ -41,12 +43,16 @@ export function listen (req, res) {
 }
 
 function handleMessage(id, text) {
-  return Prompt.find()
-    .then(prompts => {
-      let randomPrompt = prompts[Math.floor(prompts.length * Math.random())]
+  const dateId = moment().format('YYYYMMDD')
 
-      console.log(`Replacing ${text} with ${randomPrompt.text}`)
-      return sendMessage(id, randomPrompt.text)
+  return fetchEntryByDate(dateId)
+    .then(entry => {
+      let goals = entry.goals || []
+      let randomGoal = goals[Math.floor(goals.length * Math.random())]
+      let _text = `Did you ${randomGoal.text.toLowerCase()}?`
+
+      console.log(`Replacing ${text} with ${_text}`)
+      return sendMessage(id, _text)
     })
 }
 

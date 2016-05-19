@@ -52,6 +52,15 @@ function createDefaultEntry(entryDateId, cb) {
 
 }
 
+export function fetchEntryByDate (dateId) {
+  return Entry.findOne({ date: dateId })
+    .then(entry => {
+      if (entry) return entry
+
+      return createDefaultEntry(entryDateId)
+    })
+}
+
 export function list (req, res) {
   Entry.find()
     .then(entries => res.json({ entries }))
@@ -62,12 +71,7 @@ export function list (req, res) {
 export function show (req, res) {
   const entryDateId = req.params.dateId
 
-  Entry.findOne({ date: entryDateId })
-    .then(entry => {
-      if (entry) return entry
-
-      return createDefaultEntry(entryDateId)
-    })
+  fetchEntryByDate(entryDateId)
     .then(entry => res.json({ entry }))
     .catch(err => console.log('Error in method Entry#show', err))
 
