@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import Promise from 'bluebird'
+import Prompt from '../models/prompt.js'
 
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN
 const PAGE_TOKEN = process.env.PAGE_TOKEN
@@ -25,7 +26,7 @@ export function listen (req, res) {
       return (e.sender && e.sender.id) && (e.message && e.message.text)
     })
     .map(e => {
-      return textMessage(e.sender.id, e.message.text)
+      return handleMessage(e.sender.id, e.message.text)
     })
 
   Promise.all(promises)
@@ -39,7 +40,17 @@ export function listen (req, res) {
     })
 }
 
-function textMessage(id, text) {
+function handleMessage(id, text) {
+  return Prompt.find()
+    .then(prompts => {
+      let randomPrompt = prompts[Math.floor(prompts.length * Math.random())]
+
+      console.log(`Replacing ${text} with ${randomPrompt.text}`)
+      return sendMessage(id, randomPrompt.text)
+    })
+}
+
+function sendMessage(id, text) {
   const message = {
     recipient: { id },
     message: { text }
