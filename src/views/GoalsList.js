@@ -1,45 +1,47 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { fetchGoals } from '../redux/modules/goals'
+// DEPRECATED?
 
-const mapStateToProps = (state) => ({
-  goals: state.goals.items
-})
+// import React from 'react'
+// import { connect } from 'react-redux'
+// import { fetchGoals } from '../redux/modules/goals'
 
-export class GoalsList extends React.Component {
-  static propTypes = {
-    goals: React.PropTypes.array,
-    fetchGoals: React.PropTypes.func.isRequired
-  }
+// const mapStateToProps = (state) => ({
+//   goals: state.goals.items
+// })
 
-  componentDidMount () {
-    this.props.fetchGoals()
-  }
+// export class GoalsList extends React.Component {
+//   static propTypes = {
+//     goals: React.PropTypes.array,
+//     fetchGoals: React.PropTypes.func.isRequired
+//   }
 
-  render () {
-    let items
+//   componentDidMount () {
+//     this.props.fetchGoals()
+//   }
 
-    if (this.props.goals && this.props.goals.length) {
-      items = this.props.goals.map((item) => {
-        return (
-          <li key={item._id}>{item.text}</li>
-        )
-      })
-    } else {
-      items = <li>No goals!</li>
-    }
+//   render () {
+//     let items
 
-    return (
-      <div>
-        <h1>Goals</h1>
+//     if (this.props.goals && this.props.goals.length) {
+//       items = this.props.goals.map((item) => {
+//         return (
+//           <li key={item._id}>{item.text}</li>
+//         )
+//       })
+//     } else {
+//       items = <li>No goals!</li>
+//     }
 
-        <ul>
-          {items}
-        </ul>
+//     return (
+//       <div>
+//         <h1>Goals</h1>
 
-      </div>
-    )
-  }
-}
+//         <ul>
+//           {items}
+//         </ul>
 
-export default connect(mapStateToProps, { fetchGoals })(GoalsList)
+//       </div>
+//     )
+//   }
+// }
+
+// export default connect(mapStateToProps, { fetchGoals })(GoalsList)

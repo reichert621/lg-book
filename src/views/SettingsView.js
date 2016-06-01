@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { actions as promptActions } from '../redux/modules/prompts'
 import { actions as goalActions } from '../redux/modules/goals'
 import EditableList from './EditableList.js'
-import NavBar from './NavBar.js'
+import NavBar from '../components/navbar'
 
 const allActions = Object.assign({}, promptActions, goalActions)
 

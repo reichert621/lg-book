@@ -1,7 +1,8 @@
 import React from 'react'
 import EditableItem from './EditableItem.js'
+import NewItemInput from '../components/forms/NewItemInput.js'
 // TODO: store in different css file
-import styles from './EntryView.scss'
+// import styles from './EntryView.scss'
 
 export class EditableList extends React.Component {
   static propTypes = {
@@ -14,24 +15,6 @@ export class EditableList extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      newItem: ''
-    }
-  }
-
-  handleChange (e) {
-    this.setState({ newItem: e.target.value })
-  }
-
-  handleSubmit (e) {
-    if (e.which === 13) {
-      this.addItem()
-    }
-  }
-
-  addItem () {
-    this.props.addItem({ text: this.state.newItem })
-    this.refs.newItem.value = ''
   }
 
   render () {
@@ -64,16 +47,8 @@ export class EditableList extends React.Component {
           {this.props.title}
         </h1>
 
-        <div className={styles['input-add-item']}>
-          <input type='text' className='form-control' ref='newItem'
-              placeholder='Enter new item...'
-              onChange={this.handleChange.bind(this)}
-              onKeyDown={this.handleSubmit.bind(this)} />
-          <button className='btn'
-              onClick={this.addItem.bind(this)}>
-            Add
-          </button>
-        </div>
+        <NewItemInput
+          onSubmit={this.props.addItem.bind(this)} />
 
         <div>
           {items}

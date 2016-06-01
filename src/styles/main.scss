@@ -1,5 +1,11 @@
 $slate-gray: #67696b;
 $light-gray: #dde2e9;
+$dark-blue: #2c84d7;
+$darker-blue: #1c54eb;
+$blue: #65a6ff;
+$light-blue: #5fb3ff;
+$turquoise: #45e1db;
+$white: #fff;
 
 .item-container {
   display: table;
@@ -53,4 +59,36 @@ button.remove-btn {
 
 button.faded {
   opacity: 0.9;
+}
+
+.input-add-item {
+  display: inline-block;
+  width: 100%;
+  margin: 10px 0px;
+  padding: 10px;
+
+  input, button {
+    height: 42px;
+    font-size: 16px;
+  }
+
+  input {
+    float: left;
+    width: 80%;
+    font-weight: 200;
+    border-radius: 2px 0px 0px 2px;
+  }
+
+  button {
+    float: right;
+    width: 20%;
+    border-radius: 0px 2px 2px 0px;
+    color: $white;
+    background-color: $blue;
+
+    &:hover {
+      color: $white;
+      background-color: $light-blue;
+    }
+  }
 }

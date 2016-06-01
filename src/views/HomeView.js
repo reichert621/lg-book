@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import styles from './HomeView.scss'
 import { fetchEntries } from '../redux/modules/entries'
-import Calendar from './CalendarView.js'
-import NavBar from './NavBar.js'
+import Calendar from '../components/calendar'
+import NavBar from '../components/navbar'
 
 // We define mapStateToProps where we'd normally use
 // the @connect decorator so the data requirements are clear upfront, but then
@@ -14,9 +13,20 @@ const mapStateToProps = (state) => ({
   entries: state.entries.items
 })
 
+const parseEntries = (entries) => {
+  return entries.reduce((result, entry) => {
+    if (entry.date) {
+      result[entry.date] = entry
+    }
+
+    return result
+  }, {})
+}
+
 export class HomeView extends React.Component {
   static propTypes = {
     fetchEntries: React.PropTypes.func.isRequired,
+    entries: React.PropTypes.array,
     params: React.PropTypes.object
   }
 
@@ -25,16 +35,21 @@ export class HomeView extends React.Component {
   }
 
   render () {
-    const year = Number(this.props.params.year) || (new Date()).getFullYear()
-    const month = Number(this.props.params.month) || (new Date()).getMonth() + 1
+    const { entries, params } = this.props
+    let { year, month } = params
+
+    const _year = Number(year) || (new Date()).getFullYear()
+    const _month = Number(month) || (new Date()).getMonth() + 1
+    const _entries = parseEntries(entries)
 
     return (
       <div>
         <NavBar />
 
         <Calendar
-          year={year}
-          month={month} />
+          year={_year}
+          month={_month}
+          entries={_entries} />
       </div>
     )
   }
