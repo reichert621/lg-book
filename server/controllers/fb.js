@@ -171,7 +171,7 @@ class MessageParser {
       .map(question => {
         return Object.assign(question, { pending: false })
       })
-      .concat(nextQuestion)
+      .concat(nextQuestion) // TODO: fix this to not add at end
 
     return user.save()
       .then(u => {
