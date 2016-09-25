@@ -4,7 +4,8 @@ import CoreLayout from 'layouts/CoreLayout'
 import HomeView from 'views/HomeView'
 import SettingsView from 'components/settings'
 // import SettingsView from 'views/SettingsView'
-import EntryView from 'views/EntryView'
+import EntryView from 'components/entry'
+// import EntryView from 'views/EntryView'
 
 export default (
   <Route path='/' component={CoreLayout}>

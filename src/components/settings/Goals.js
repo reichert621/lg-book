@@ -15,13 +15,15 @@ export class GoalSettings extends React.Component {
   }
 
   render () {
-    let goals = this.props.goals.map((goal, index) => {
+    const { goals, removeGoal, updateGoal, addGoal } = this.props
+
+    let _goals = goals.map((goal, index) => {
       return (
         <Goal
           key={index}
           goal={goal}
-          onRemove={this.props.removeGoal.bind(this, goal._id)}
-          onUpdate={this.props.updateGoal.bind(this, goal._id)} />
+          onRemove={removeGoal.bind(this, goal._id)}
+          onUpdate={updateGoal.bind(this, goal._id)} />
       )
     })
 
@@ -32,10 +34,10 @@ export class GoalSettings extends React.Component {
         </h1>
 
         <NewItemInput
-          onSubmit={this.props.addGoal.bind(this)} />
+          onSubmit={addGoal.bind(this)} />
 
         <div>
-          {goals}
+          {_goals}
         </div>
 
       </div>

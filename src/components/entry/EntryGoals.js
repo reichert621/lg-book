@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './EntryView.scss'
+import styles from './Entry.scss'
 
 export class EntryGoals extends React.Component {
   static propTypes = {

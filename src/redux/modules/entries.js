@@ -88,7 +88,8 @@ export function editEntry (entry, params) {
 export const actions = {
   fetchEntries,
   fetchEntry,
-  updateEntry
+  updateEntry,
+  editEntry
 }
 
 const initialState = {

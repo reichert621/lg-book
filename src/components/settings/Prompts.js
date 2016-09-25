@@ -15,13 +15,15 @@ export class PromptSettings extends React.Component {
   }
 
   render () {
-    let prompts = this.props.prompts.map((prompt, index) => {
+    const { prompts, removePrompt, updatePrompt, addPrompt } = this.props
+
+    let _prompts = prompts.map((prompt, index) => {
       return (
         <Prompt
           key={index}
           prompt={prompt}
-          onRemove={this.props.removePrompt.bind(this, prompt._id)}
-          onUpdate={this.props.updatePrompt.bind(this, prompt._id)} />
+          onRemove={removePrompt.bind(this, prompt._id)}
+          onUpdate={updatePrompt.bind(this, prompt._id)} />
       )
     })
 
@@ -32,10 +34,10 @@ export class PromptSettings extends React.Component {
         </h1>
 
         <NewItemInput
-          onSubmit={this.props.addPrompt.bind(this)} />
+          onSubmit={addPrompt.bind(this)} />
 
         <div>
-          {prompts}
+          {_prompts}
         </div>
 
       </div>

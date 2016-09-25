@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import classNames from 'classnames'
-import styles from './EntryView.scss'
+import styles from './Entry.scss'
 
 export class EntryPrompts extends React.Component {
   static propTypes = {

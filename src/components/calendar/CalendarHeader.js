@@ -1,4 +1,3 @@
-
 import React from 'react'
 import classes from './Calendar.scss'
 import moment from 'moment'
