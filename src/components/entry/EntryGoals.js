@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './Entry.scss'
+import AddItem from './AddItem.js'
 
 export class EntryGoals extends React.Component {
   static propTypes = {
@@ -9,7 +10,7 @@ export class EntryGoals extends React.Component {
 
   toggleGoal (goal) {
     let params = {
-      goals: this.props.goals.map((item) => {
+      goals: this.props.goals.map(item => {
         if (item.text === goal.text) {
           item.finished = !item.finished
         }
@@ -21,27 +22,14 @@ export class EntryGoals extends React.Component {
     this.props.handleUpdate(params)
   }
 
-  addGoal () {
-    if (!this.refs.newGoal.value || !this.refs.newGoal.value.length) {
-      return
-    }
+  addGoal (text) {
+    if (!text) return
 
-    const newGoal = {
-      text: this.refs.newGoal.value, finished: false
-    }
+    const { goals, handleUpdate } = this.props
+    const _goal = { text, finished: false }
+    const params = { goals: goals.concat(_goal) }
 
-    let params = {
-      goals: this.props.goals.concat(newGoal)
-    }
-
-    this.props.handleUpdate(params)
-    this.refs.newGoal.value = ''
-  }
-
-  handleSubmitNew (e) {
-    if (e.which === 13) {
-      this.addGoal()
-    }
+    handleUpdate(params)
   }
 
   render () {
@@ -63,15 +51,10 @@ export class EntryGoals extends React.Component {
       <div>
         <div>{goals}</div>
 
-        <div className={styles['input-add-item']}>
-          <input type='text' className='form-control' ref='newGoal'
-              placeholder='Enter new goal...'
-              onKeyDown={this.handleSubmitNew.bind(this)} />
-          <button className='btn'
-              onClick={this.addGoal.bind(this)}>
-            Add
-          </button>
-        </div>
+        <AddItem
+          placeholder='Enter new goal...'
+          addItem={this.addGoal.bind(this)} />
+
       </div>
     )
   }

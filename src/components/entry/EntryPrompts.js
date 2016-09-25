@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import classNames from 'classnames'
 import styles from './Entry.scss'
+import AddItem from './AddItem.js'
 
 export class EntryPrompts extends React.Component {
   static propTypes = {
@@ -61,21 +62,14 @@ export class EntryPrompts extends React.Component {
     this.props.handleUpdate(params)
   }
 
-  addPrompt () {
-    const newPrompt = { question: this.refs.newPrompt.value }
+  addPrompt (text) {
+    if (!text) return
 
-    let params = {
-      prompts: this.props.prompts.concat(newPrompt)
-    }
+    const { prompts, handleUpdate } = this.props
+    const _prompt = { question: text }
+    const params = { prompts: prompts.concat(_prompt) }
 
-    this.props.handleUpdate(params)
-    this.refs.newPrompt.value = ''
-  }
-
-  handleSubmitNew (e) {
-    if (e.which === 13) {
-      this.addPrompt()
-    }
+    handleUpdate(params)
   }
 
   render () {
@@ -121,15 +115,9 @@ export class EntryPrompts extends React.Component {
         </div>
         <div className=''>{prompts}</div>
 
-        <div className={styles['input-add-item']}>
-          <input type='text' className='form-control' ref='newPrompt'
-              placeholder='Enter new question...'
-              onKeyDown={this.handleSubmitNew.bind(this)} />
-          <button className='btn'
-              onClick={this.addPrompt.bind(this)}>
-            Add
-          </button>
-        </div>
+        <AddItem
+          placeholder='Enter new question...'
+          addItem={this.addPrompt.bind(this)} />
       </div>
     )
   }
