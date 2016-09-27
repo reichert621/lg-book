@@ -29,7 +29,7 @@ export function fetchEntries () {
   return dispatch => {
     dispatch(requestEntries())
 
-    API.fetchEntries().then(
+    return API.fetchEntries().then(
       json => dispatch(receiveEntries(json)),
       error => dispatch(receiveFailure(error))
     )
@@ -57,7 +57,7 @@ export function fetchEntry (dateId) {
   return dispatch => {
     dispatch(requestEntry())
 
-    API.fetchEntry(dateId).then(
+    return API.fetchEntry(dateId).then(
       json => dispatch(receiveEntry(json)),
       error => dispatch(receiveFailure(error))
     )
@@ -68,7 +68,7 @@ export function updateEntry (id, params) {
   return dispatch => {
     dispatch(requestEntry())
 
-    API.updateEntry(id, params).then(
+    return API.updateEntry(id, params).then(
       json => dispatch(receiveEntry(json)),
       error => dispatch(receiveFailure(error))
     )

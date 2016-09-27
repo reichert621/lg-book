@@ -1,25 +1,22 @@
 import React from 'react'
-import styles from './Entry.scss'
 import AddItem from './AddItem.js'
+import Goal from './Goal.js'
 
 export class EntryGoals extends React.Component {
-  static propTypes = {
-    goals: React.PropTypes.array,
-    handleUpdate: React.PropTypes.func.isRequired
-  }
-
   toggleGoal (goal) {
-    let params = {
-      goals: this.props.goals.map(item => {
-        if (item.text === goal.text) {
-          item.finished = !item.finished
+    const { goals, handleUpdate } = this.props
+
+    const params = {
+      goals: goals.map(g => {
+        if (g.text === goal.text) {
+          g.finished = !g.finished
         }
 
-        return item
+        return g
       })
     }
 
-    this.props.handleUpdate(params)
+    handleUpdate(params)
   }
 
   addGoal (text) {
@@ -33,23 +30,20 @@ export class EntryGoals extends React.Component {
   }
 
   render () {
-    let goals = this.props.goals.map((item) => {
-      let itemStyle = {
-        textDecoration: item.finished ? 'line-through' : 'none'
-      }
-
-      return (
-        <div key={item._id} style={itemStyle}
-          className={styles['list-item-goal']}
-          onClick={this.toggleGoal.bind(this, item)}>
-          {item.text}
-        </div>
-      )
-    })
+    const { goals } = this.props
 
     return (
       <div>
-        <div>{goals}</div>
+        <div>
+          {
+            goals.map(g =>
+              <Goal
+                key={g._id}
+                goal={g}
+                handleToggle={this.toggleGoal.bind(this, g)} />
+            )
+          }
+        </div>
 
         <AddItem
           placeholder='Enter new goal...'
@@ -58,6 +52,11 @@ export class EntryGoals extends React.Component {
       </div>
     )
   }
+}
+
+EntryGoals.propTypes = {
+  goals: React.PropTypes.array,
+  handleUpdate: React.PropTypes.func.isRequired
 }
 
 export default EntryGoals
